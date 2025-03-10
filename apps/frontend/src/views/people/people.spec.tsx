@@ -2,21 +2,21 @@ import { describe, expect, it } from "vitest";
 import { renderContainer } from "../../utils/testing-utils/render-container";
 import { PeopleView } from "./people.view";
 import { screen, waitFor } from "@testing-library/react";
-import { mockEndpoint } from "../../utils/testing-utils/server";
-import { createPersonHobbiesResType, createPersonHobbiesUrl } from "../../services/people";
+import { worker } from '../../utils/testing-utils/server'
 import { userEvent } from "@vitest/browser/context";
+import { http } from '../../utils/testing-utils/people-mocks.ts'
 
 const user = userEvent.setup();
 
 describe("PeopleView", () => {
     it("Should allow the user to add a hobby to their person", async () => {
-
-        mockEndpoint(createPersonHobbiesUrl, {
-            hobbies: [{
-                id: "0",
-                name: "Go to the gym"
-            }]
-        } satisfies createPersonHobbiesResType, "post")
+        worker.use(http.post("/{person_id}/hobbies", ({response}) =>
+          response(200).json({
+              hobbies: [{
+                  id: "0",
+                  name: "Go to the gym"
+              }]
+          })))
 
         renderContainer(<PeopleView />)
 

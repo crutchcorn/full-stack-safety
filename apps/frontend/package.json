@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "gen:openapi": "npx openapi-typescript ../backend/out/openapi.json -o ./src/services/schemas/people.d.ts",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

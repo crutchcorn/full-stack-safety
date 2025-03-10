@@ -1,0 +1,4 @@
+- [ ] Prevent .js files from being imported
+  - Right now, webstorm auto-imports `.js` paths instead of `.ts` paths
+- [ ] Add shared package for types/valibot usage between FE/BE
+- [ ] Enforce `import type` aliasing

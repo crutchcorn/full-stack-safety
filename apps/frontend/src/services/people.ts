@@ -1,14 +1,19 @@
-import { Hobby } from "../types/hobby";
-import { fillRoute } from "../utils/fill-route";
+import createClient from "openapi-fetch";
+import { paths } from "./schemas/people";
 
-async function unwrapNetworkResponse<T = any>(response: Response) {
-  const data = await response.json();
-  if (!response.ok) {
-    throw data;
-  }
-  // We don't need to check if the status is 2xx here, because Axios already does.
-  return data as T;
-}
+type GetPathReqBody<TKey extends keyof paths, TMethod extends keyof paths[TKey]> =
+  Required<paths[TKey][TMethod]> extends {requestBody: infer TRequestBody} ?
+    TRequestBody extends {content: infer TContent} ?
+      TContent extends { 'application/json': infer TJson } ? TJson : never : never : never;
+
+
+type GetPathReqParams<TKey extends keyof paths, TMethod extends keyof paths[TKey]> =
+  Required<paths[TKey][TMethod]> extends {parameters: infer TParameters} ?
+    TParameters extends {path: infer TPath} ?
+      TPath : never : never;
+
+type GetReqProps<TKey extends keyof paths, TMethod extends keyof paths[TKey]> =
+  GetPathReqBody<TKey, TMethod> & GetPathReqParams<TKey, TMethod>
 
 interface BaseNetworkProp {
   baseUrl: string;
@@ -16,20 +21,15 @@ interface BaseNetworkProp {
   body?: any;
 }
 
-type Method = "GET" | "POST" | "PATCH" | "DELETE";
+const client = createClient<paths>();
 
-async function makeNetworkRequest({
-  method,
+function getBaseFetchOptions({
   baseUrl,
-  relativeUrl,
   body,
   signal,
-}: BaseNetworkProp & {
-  method: Method;
-  relativeUrl: string;
-}): Promise<Response> {
-  return await fetch(baseUrl + relativeUrl, {
-    method: method,
+}: BaseNetworkProp) {
+  return {
+    baseUrl,
     body: JSON.stringify(body),
     headers: {
       Accept: "application/json",
@@ -41,52 +41,33 @@ async function makeNetworkRequest({
       // Manual cancelation
       ...(signal ? [signal] : []),
     ]),
-  });
+  };
 }
 
-/**
- * By convention, each network request has up to three different items:
- *
- * - {{name}}Url: The URL with `/:params/` interpolated routes
- * - {{name}}ResType: The response type from the server on success
- * - {{name}}ReqType: The request type the server expects JSON-ified on `body`
- */
-export const createPersonHobbiesUrl = "/people/:person_id/hobbies";
-
-export type createPersonHobbiesResType = {
-  hobbies: Hobby[];
-};
-
-export interface HobbyCreatePayload {
-  person_id: string;
-  new_hobbies: Hobby[];
-}
-
-export interface createPersonHobbiesReqType
-  extends BaseNetworkProp,
-    HobbyCreatePayload {}
 export async function createPersonHobbies({
   baseUrl,
   signal,
   person_id,
   new_hobbies,
   ...props
-}: createPersonHobbiesReqType) {
-  const pathUrl = fillRoute(createPersonHobbiesUrl, {
-    person_id,
-  });
-  const response = await makeNetworkRequest({
-    method: "POST",
-    baseUrl: baseUrl,
-    relativeUrl: pathUrl,
-    signal,
-    body: new_hobbies,
-    ...props,
+}: BaseNetworkProp & GetReqProps<"/{person_id}/hobbies", 'post'>) {
+  const { data, error } = await client.POST(
+    "/{person_id}/hobbies",
+    {
+      params: {
+        path: {
+          person_id
+        }
+      },
+      ...getBaseFetchOptions({baseUrl, signal, body: new_hobbies}),
+      ...props,
   });
 
+  if (error) throw error;
+  if (!data) throw "No data returned from API"
+
   // Here, we can map our API responses to whatever data would make most sense to return from the server
-  const { hobbies } =
-    await unwrapNetworkResponse<createPersonHobbiesResType>(response);
+  const { hobbies } = data;
 
   return hobbies;
 }

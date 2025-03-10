@@ -1,9 +1,7 @@
 import {Hono} from 'hono'
-import {indexApp} from "./routes/index/index.app.ts";
-import {messageApp} from "./routes/[message]/[message].app.ts";
+import { personHobbiesApp } from './routes/person__[person_id]__hobbies/person__[person_id]__hobbies.app.ts'
 
 const app = new Hono()
-  .route("/", indexApp)
-  .route('/message/:message', messageApp);
+  .route("/:person_id/hobbies", personHobbiesApp)
 
 export {app}

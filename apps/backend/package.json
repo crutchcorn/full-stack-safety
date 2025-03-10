@@ -1,0 +1,30 @@
+{
+  "name": "hono-openapi",
+  "type": "module",
+  "scripts": {
+    "dev": "node --experimental-strip-types ./src/node.ts",
+    "build": "esbuild --bundle --outfile=./dist/aws-lambda.js --platform=node --target=node20 ./src/aws-lambda.ts",
+    "zip": "zip -j lambda.zip dist/aws-lambda.js",
+    "update": "aws lambda update-function-code --zip-file fileb://lambda.zip --function-name hello",
+    "deploy": "run-s build zip update",
+    "gen:openapi": "node  --experimental-strip-types ./scripts/generate-openapi-spec.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "esbuild": "^0.21.4",
+    "npm-run-all2": "^6.2.0",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.8",
+    "@hono/valibot-validator": "^0.5.2",
+    "@scalar/hono-api-reference": "^0.5.183",
+    "@valibot/to-json-schema": "1.0.0-rc.0",
+    "hono": "^4.7.4",
+    "hono-openapi": "^0.4.6",
+    "valibot": "1.0.0-rc.3"
+  },
+  "engines": {
+    "node": "22.14.0"
+  }
+}

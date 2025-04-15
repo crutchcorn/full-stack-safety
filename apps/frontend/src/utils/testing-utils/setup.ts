@@ -1,7 +1,6 @@
-import { afterEach, beforeAll } from "vitest";
-import { worker } from "./server";
+import { afterEach, beforeAll } from 'vitest'
+import { worker } from './server'
 
+beforeAll(() => worker.start())
 
-beforeAll(() => worker.start());
-
-afterEach(() => worker.resetHandlers());
+afterEach(() => worker.resetHandlers())

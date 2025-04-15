@@ -1,9 +1,9 @@
-import { usePeopleLogic } from "./people.logic";
-import { PeopleUI } from "./people.ui";
+import { usePeopleLogic } from './people.logic'
+import { PeopleUI } from './people.ui'
 
 export function PeopleView() {
   // This would usually be derived from a router of some kind
-  const person_id = "123";
+  const person_id = '123'
 
   const {
     personHobbies,
@@ -14,7 +14,7 @@ export function PeopleView() {
     setHobbyInputVal,
   } = usePeopleLogic({
     person_id,
-  });
+  })
 
   return (
     <PeopleUI
@@ -26,5 +26,5 @@ export function PeopleView() {
       hobbyInputVal={hobbyInputVal}
       setHobbyInputVal={setHobbyInputVal}
     />
-  );
+  )
 }

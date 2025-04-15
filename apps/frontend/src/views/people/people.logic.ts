@@ -1,17 +1,17 @@
-import { useMutation } from "@tanstack/react-query";
-import { useNetworkingParams } from "../../hooks/useNetworkingParams";
+import { useMutation } from '@tanstack/react-query'
+import { useNetworkingParams } from '../../hooks/useNetworkingParams'
 import {
   createPersonHobbies as _createPersonHobbies,
   HobbyCreatePayload,
-} from "../../services/people";
-import { useEffect, useRef, useState } from "react";
+} from '../../services/people'
+import { useEffect, useRef, useState } from 'react'
 
 interface UsePeopleLogicProps {
-  person_id: string;
+  person_id: string
 }
 
 export function usePeopleLogic({ person_id }: UsePeopleLogicProps) {
-  const networkingProps = useNetworkingParams();
+  const networkingProps = useNetworkingParams()
 
   const {
     data: personHobbies,
@@ -19,30 +19,30 @@ export function usePeopleLogic({ person_id }: UsePeopleLogicProps) {
     error: personHobbiesError,
     isPending: isPersonHobbiesPending,
   } = useMutation({
-    mutationKey: ["people", person_id, "hobbies"],
-    mutationFn: (data: Omit<HobbyCreatePayload, "person_id">) => {
+    mutationKey: ['people', person_id, 'hobbies'],
+    mutationFn: (data: Omit<HobbyCreatePayload, 'person_id'>) => {
       return _createPersonHobbies({
         ...networkingProps,
         ...data,
         person_id,
-      });
+      })
     },
-  });
+  })
 
-  const hobbyCountRef = useRef(0);
+  const hobbyCountRef = useRef(0)
 
-  const [hobbyInputVal, setHobbyInputVal] = useState("");
+  const [hobbyInputVal, setHobbyInputVal] = useState('')
 
   const addHobby = () => {
-    const newHobby = { name: hobbyInputVal, id: "" + ++hobbyCountRef.current };
+    const newHobby = { name: hobbyInputVal, id: '' + ++hobbyCountRef.current }
     createPersonHobbies({
       new_hobbies: [newHobby],
-    });
-  };
+    })
+  }
 
   useEffect(() => {
-    if (!personHobbiesError) return;
-    console.error(personHobbiesError);
+    if (!personHobbiesError) return
+    console.error(personHobbiesError)
   }, [personHobbiesError])
 
   return {
@@ -53,5 +53,5 @@ export function usePeopleLogic({ person_id }: UsePeopleLogicProps) {
     hobbyInputVal,
     setHobbyInputVal,
     addHobby,
-  };
+  }
 }

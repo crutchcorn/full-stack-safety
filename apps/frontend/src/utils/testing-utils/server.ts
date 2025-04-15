@@ -1,5 +1,5 @@
 import { setupWorker } from 'msw/browser'
-import { peopleHandlers } from "./people-mocks";
+import { peopleHandlers } from './people-mocks'
 
 /**
  * This only works like this if you're using Vitest browser mode.

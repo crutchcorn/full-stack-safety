@@ -4,69 +4,69 @@
  */
 
 export interface paths {
-    "/{person_id}/hobbies": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** @description Return what's said to the user */
-        post: operations["postByPerson_idHobbies"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+  '/{person_id}/hobbies': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** @description Return what's said to the user */
+    post: operations['postByPerson_idHobbies']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
 }
-export type webhooks = Record<string, never>;
+export type webhooks = Record<string, never>
 export interface components {
-    schemas: never;
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+  schemas: never
+  responses: never
+  parameters: never
+  requestBodies: never
+  headers: never
+  pathItems: never
 }
-export type $defs = Record<string, never>;
+export type $defs = Record<string, never>
 export interface operations {
-    postByPerson_idHobbies: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                person_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": {
-                    new_hobbies: {
-                        name: string;
-                        id: string;
-                    }[];
-                };
-            };
-        };
-        responses: {
-            /** @description Successful response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        hobbies: {
-                            name: string;
-                            id: string;
-                        }[];
-                    };
-                };
-            };
-        };
-    };
+  postByPerson_idHobbies: {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        person_id: string
+      }
+      cookie?: never
+    }
+    requestBody?: {
+      content: {
+        'application/json': {
+          new_hobbies: {
+            name: string
+            id: string
+          }[]
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            hobbies: {
+              name: string
+              id: string
+            }[]
+          }
+        }
+      }
+    }
+  }
 }

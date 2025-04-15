@@ -1,39 +1,48 @@
-import createClient from "openapi-fetch";
-import { paths } from "./schemas/people";
+import createClient from 'openapi-fetch'
+import { paths } from './schemas/people'
 
-type GetPathReqBody<TKey extends keyof paths, TMethod extends keyof paths[TKey]> =
-  Required<paths[TKey][TMethod]> extends {requestBody: infer TRequestBody} ?
-    TRequestBody extends {content: infer TContent} ?
-      TContent extends { 'application/json': infer TJson } ? TJson : never : never : never;
+type GetPathReqBody<
+  TKey extends keyof paths,
+  TMethod extends keyof paths[TKey],
+> =
+  Required<paths[TKey][TMethod]> extends { requestBody: infer TRequestBody }
+    ? TRequestBody extends { content: infer TContent }
+      ? TContent extends { 'application/json': infer TJson }
+        ? TJson
+        : never
+      : never
+    : never
 
+type GetPathReqParams<
+  TKey extends keyof paths,
+  TMethod extends keyof paths[TKey],
+> =
+  Required<paths[TKey][TMethod]> extends { parameters: infer TParameters }
+    ? TParameters extends { path: infer TPath }
+      ? TPath
+      : never
+    : never
 
-type GetPathReqParams<TKey extends keyof paths, TMethod extends keyof paths[TKey]> =
-  Required<paths[TKey][TMethod]> extends {parameters: infer TParameters} ?
-    TParameters extends {path: infer TPath} ?
-      TPath : never : never;
-
-type GetReqProps<TKey extends keyof paths, TMethod extends keyof paths[TKey]> =
-  GetPathReqBody<TKey, TMethod> & GetPathReqParams<TKey, TMethod>
+type GetReqProps<
+  TKey extends keyof paths,
+  TMethod extends keyof paths[TKey],
+> = GetPathReqBody<TKey, TMethod> & GetPathReqParams<TKey, TMethod>
 
 interface BaseNetworkProp {
-  baseUrl: string;
-  signal?: AbortSignal;
-  body?: any;
+  baseUrl: string
+  signal?: AbortSignal
+  body?: any
 }
 
-const client = createClient<paths>();
+const client = createClient<paths>()
 
-function getBaseFetchOptions({
-  baseUrl,
-  body,
-  signal,
-}: BaseNetworkProp) {
+function getBaseFetchOptions({ baseUrl, body, signal }: BaseNetworkProp) {
   return {
     baseUrl,
     body: JSON.stringify(body),
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     signal: AbortSignal.any([
       // Add timeout to fetch
@@ -41,7 +50,7 @@ function getBaseFetchOptions({
       // Manual cancelation
       ...(signal ? [signal] : []),
     ]),
-  };
+  }
 }
 
 export async function createPersonHobbies({
@@ -50,24 +59,22 @@ export async function createPersonHobbies({
   person_id,
   new_hobbies,
   ...props
-}: BaseNetworkProp & GetReqProps<"/{person_id}/hobbies", 'post'>) {
-  const { data, error } = await client.POST(
-    "/{person_id}/hobbies",
-    {
-      params: {
-        path: {
-          person_id
-        }
+}: BaseNetworkProp & GetReqProps<'/{person_id}/hobbies', 'post'>) {
+  const { data, error } = await client.POST('/{person_id}/hobbies', {
+    params: {
+      path: {
+        person_id,
       },
-      ...getBaseFetchOptions({baseUrl, signal, body: new_hobbies}),
-      ...props,
-  });
+    },
+    ...getBaseFetchOptions({ baseUrl, signal, body: new_hobbies }),
+    ...props,
+  })
 
-  if (error) throw error;
-  if (!data) throw "No data returned from API"
+  if (error) throw error
+  if (!data) throw 'No data returned from API'
 
   // Here, we can map our API responses to whatever data would make most sense to return from the server
-  const { hobbies } = data;
+  const { hobbies } = data
 
-  return hobbies;
+  return hobbies
 }

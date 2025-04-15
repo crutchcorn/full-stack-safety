@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render } from '@testing-library/react'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 
 const queryClient = new QueryClient()
 

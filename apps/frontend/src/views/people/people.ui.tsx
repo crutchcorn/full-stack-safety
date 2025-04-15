@@ -1,8 +1,8 @@
-import { createPersonHobbiesResType } from '../../services/people'
+import type { createPersonHobbies } from '../../services/people'
 
 interface PeopleUIProps {
   personId: string
-  personHobbies: createPersonHobbiesResType['hobbies'] | undefined
+  personHobbies: createPersonHobbies | undefined
   addHobby: () => void
   personHobbiesError: Error | null
   isPersonHobbiesPending: boolean

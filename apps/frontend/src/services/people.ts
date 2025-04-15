@@ -1,5 +1,5 @@
 import createClient from 'openapi-fetch'
-import { paths } from './schemas/people'
+import type { paths } from './schemas/people'
 
 type GetPathReqBody<
   TKey extends keyof paths,
@@ -31,6 +31,7 @@ type GetReqProps<
 interface BaseNetworkProp {
   baseUrl: string
   signal?: AbortSignal
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any
 }
 
@@ -53,13 +54,19 @@ function getBaseFetchOptions({ baseUrl, body, signal }: BaseNetworkProp) {
   }
 }
 
+export type HobbyCreatePayload = GetReqProps<'/{person_id}/hobbies', 'post'>
+
+export type createPersonHobbies = Awaited<
+  ReturnType<typeof createPersonHobbies>
+>
+
 export async function createPersonHobbies({
   baseUrl,
   signal,
   person_id,
   new_hobbies,
   ...props
-}: BaseNetworkProp & GetReqProps<'/{person_id}/hobbies', 'post'>) {
+}: BaseNetworkProp & HobbyCreatePayload) {
   const { data, error } = await client.POST('/{person_id}/hobbies', {
     params: {
       path: {

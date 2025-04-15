@@ -1,3 +1,10 @@
 {
-  "$schema": "https://unpkg.com/knip@5/schema.json"
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": [
+    "@vitest/coverage-v8",
+    "@hono/node-server",
+    "@scalar/hono-api-reference",
+    "@demo-proj/backend"
+  ],
+  "ignore": ["**/schemas/*", "**/node.ts", "**/open-api.ts", "**/scripts/*"]
 }

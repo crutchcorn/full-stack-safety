@@ -1,9 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { useNetworkingParams } from '../../hooks/useNetworkingParams'
-import {
-  createPersonHobbies as _createPersonHobbies,
-  HobbyCreatePayload,
-} from '../../services/people'
+import type { HobbyCreatePayload } from '../../services/people'
+import { createPersonHobbies as _createPersonHobbies } from '../../services/people'
 import { useEffect, useRef, useState } from 'react'
 
 interface UsePeopleLogicProps {

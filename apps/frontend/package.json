@@ -1,45 +1,40 @@
 {
-  "name": "msw-tanstack-react-demo",
+  "name": "@demo-proj/frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "preview": "vite preview",
     "gen:openapi": "npx openapi-typescript ../backend/out/openapi.json -o ./src/services/schemas/people.d.ts",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "test": "vitest"
+    "test:eslint": "eslint .",
+    "test:lib": "vitest --watch=false"
   },
   "dependencies": {
-    "openapi-fetch": "^0.13.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@demo-proj/backend": "workspace:*",
+    "openapi-fetch": "^0.13.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@tanstack/react-query": "^5.51.5",
+    "@tanstack/react-query": "^5.74.3",
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@vitest/browser": "^3.0.8",
-    "@vitest/coverage-v8": "^3.0.8",
-    "eslint": "^9.21.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.0",
+    "@vitest/browser": "^3.1.1",
+    "@vitest/coverage-v8": "^3.1.1",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
-    "msw": "^2.7.3",
-    "openapi-msw": "^1.1.0",
+    "globals": "^16.0.0",
+    "msw": "^2.7.4",
+    "openapi-msw": "^1.2.0",
     "openapi-typescript": "^7.6.1",
-    "playwright": "^1.51.0",
-    "prettier": "^3.5.3",
-    "typescript": "~5.7.3",
-    "typescript-eslint": "^8.24.1",
-    "vite": "^6.2.0",
-    "vitest": "^3.0.8"
+    "playwright": "^1.51.1",
+    "vite": "^6.2.6",
+    "vitest": "^3.1.1"
   },
   "msw": {
     "workerDirectory": [

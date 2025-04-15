@@ -1,4 +1,4 @@
-import { paths } from '../../services/schemas/people'
+import type { paths } from '../../services/schemas/people'
 import { createOpenApiHttp } from 'openapi-msw'
 
 // Should be replaced with an env var of some kind

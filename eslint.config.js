@@ -1,21 +1,26 @@
-// @ts-check
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
 
-// @ts-ignore Needed due to moduleResolution Node vs Bundler
-import { tanstackConfig } from '@tanstack/config/eslint'
-
-export default [
-  ...tanstackConfig,
+export default tseslint.config(
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  { ignores: ['dist'] },
   {
-    name: 'tanstack/temp',
     rules: {
-      '@typescript-eslint/array-type': 'off',
-      '@typescript-eslint/method-signature-style': 'off',
-      '@typescript-eslint/naming-convention': 'off',
-      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
-      '@typescript-eslint/no-unsafe-function-type': 'off',
-      '@typescript-eslint/require-await': 'off',
-      'no-async-promise-executor': 'off',
-      'no-empty': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
     },
   },
-]
+)

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-export const getBaseUrl = (_env: ImportMetaEnv) => {
+const getBaseUrl = (_env: ImportMetaEnv) => {
   // You can return different base URLs depending on your environmental vars
   return `https://example.com`
 }

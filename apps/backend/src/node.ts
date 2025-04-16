@@ -14,7 +14,7 @@ app.get(
   }),
 )
 
-const PORT = 3000
+const PORT = 3030
 
 serve({
   fetch: app.fetch,

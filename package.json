@@ -19,8 +19,7 @@
     "test:knip": "knip",
     "build": "nx affected --target=build",
     "build:all": "nx run-many --target=build",
-    "watch": "pnpm run build:all && nx watch --all -- pnpm run build:all",
-    "dev": "pnpm run watch",
+    "dev": "nx run-many -t dev --filter=\"./apps/**\"",
     "prettier": "prettier --ignore-unknown .",
     "prettier:write": "pnpm run prettier --write"
   },

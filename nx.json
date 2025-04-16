@@ -51,6 +51,11 @@
       "inputs": ["production", "^production"],
       "outputs": ["{projectRoot}/build", "{projectRoot}/dist"]
     },
+    "dev": {
+      "cache": false,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
     "test:build": {
       "cache": true,
       "dependsOn": ["build"],

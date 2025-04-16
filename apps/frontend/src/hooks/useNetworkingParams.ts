@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 const getBaseUrl = (_env: ImportMetaEnv) => {
   // You can return different base URLs depending on your environmental vars
-  return `http://localhost:3000`
+  return `http://localhost:3030`
 }
 
 export const useNetworkingParams = () => {

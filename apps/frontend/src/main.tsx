@@ -4,6 +4,7 @@ import { App } from './App.tsx'
 
 async function enableMocking() {
   // You can add a check here for `dev` mode to conditionally enable this
+  if (!import.meta.env.VITEST) return
 
   const { worker } = await import('./utils/testing-utils/server')
   return worker.start()

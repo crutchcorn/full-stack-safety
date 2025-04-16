@@ -2,7 +2,7 @@ import type { paths } from '../../services/schemas/people'
 import { createOpenApiHttp } from 'openapi-msw'
 
 // Should be replaced with an env var of some kind
-const baseUrl = 'https://example.com'
+const baseUrl = 'http://localhost:3000'
 
 export const http = createOpenApiHttp<paths>({
   baseUrl,

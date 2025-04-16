@@ -40,7 +40,7 @@ const client = createClient<paths>()
 function getBaseFetchOptions({ baseUrl, body, signal }: BaseNetworkProp) {
   return {
     baseUrl,
-    body: JSON.stringify(body),
+    body,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export async function createPersonHobbies({
         person_id,
       },
     },
-    ...getBaseFetchOptions({ baseUrl, signal, body: new_hobbies }),
+    ...getBaseFetchOptions({ baseUrl, signal, body: { new_hobbies } }),
     ...props,
   })
 

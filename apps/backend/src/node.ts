@@ -1,7 +1,7 @@
 import { serve } from '@hono/node-server'
-import { app } from './shared.ts'
 import { openAPISpecs } from 'hono-openapi'
 import { Scalar } from '@scalar/hono-api-reference'
+import { app } from './shared.ts'
 import { openAPIOptions } from './constants/open-api.ts'
 
 app.get('/openapi', openAPISpecs(app, openAPIOptions))
@@ -13,4 +13,12 @@ app.get(
     url: '/openapi',
   }),
 )
-serve(app)
+
+const PORT = 3000
+
+serve({
+  fetch: app.fetch,
+  port: PORT,
+})
+
+console.log(`Server running at http://localhost:${PORT}`)
